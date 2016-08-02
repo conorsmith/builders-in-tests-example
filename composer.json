@@ -1,0 +1,19 @@
+{
+  "name": "conorsmith/builders-in-tests-example",
+  "require": {
+    "php": "~7.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "~5.3"
+  },
+  "autoload": {
+    "psr-4": {
+      "ConorSmith\\BuildersInTestsExample\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "ConorSmith\\BuildersInTestsExampleTest\\": "tests/"
+    }
+  }
+}
