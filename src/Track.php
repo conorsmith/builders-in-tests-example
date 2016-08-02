@@ -5,9 +5,9 @@ namespace ConorSmith\BuildersInTestsExample;
 
 final class Track
 {
-    public static function fromNameAndDuration(string $name, Duration $duration): Track
+    public static function fromNameAndDurationAndArtist(string $name, Duration $duration, Artist $artist): Track
     {
-        return new self($name, $duration);
+        return new self($name, $duration, $artist);
     }
 
     /** @var string */
@@ -16,10 +16,14 @@ final class Track
     /** @var Duration */
     private $duration;
 
-    private function __construct(string $name, Duration $duration)
+    /** @var Artist */
+    private $artist;
+
+    private function __construct(string $name, Duration $duration, Artist $artist)
     {
         $this->name = $name;
         $this->duration = $duration;
+        $this->artist = $artist;
     }
 
     public function getName(): string
@@ -30,5 +34,10 @@ final class Track
     public function getDuration(): Duration
     {
         return $this->duration;
+    }
+
+    public function getArtist(): Artist
+    {
+        return $this->artist;
     }
 }

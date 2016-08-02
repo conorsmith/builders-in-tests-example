@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace ConorSmith\BuildersInTestsExampleTest;
 
+use ConorSmith\BuildersInTestsExample\Artist;
 use ConorSmith\BuildersInTestsExample\Duration;
 use ConorSmith\BuildersInTestsExample\Track;
 
@@ -10,7 +11,7 @@ trait BuildsAlbumValues
 {
     private function track()
     {
-        return new class($this->duration()->build())
+        return new class($this->duration()->build(), $this->artist()->build())
         {
             /** @var string */
             private $name;
@@ -18,10 +19,14 @@ trait BuildsAlbumValues
             /** @var Duration */
             private $duration;
 
-            public function __construct(Duration $defaultDuration)
+            /** @var Artist */
+            private $artist;
+
+            public function __construct(Duration $defaultDuration, Artist $defaultArtist)
             {
                 $this->name = "some name";
                 $this->duration = $defaultDuration;
+                $this->artist = $defaultArtist;
             }
 
             public function withName(string $name): self
@@ -36,9 +41,15 @@ trait BuildsAlbumValues
                 return $this;
             }
 
+            public function withArtist(Artist $artist): self
+            {
+                $this->artist = $artist;
+                return $this;
+            }
+
             public function build(): Track
             {
-                return Track::fromNameAndDuration($this->name, $this->duration);
+                return Track::fromNameAndDurationAndArtist($this->name, $this->duration, $this->artist);
             }
         };
     }
@@ -64,6 +75,31 @@ trait BuildsAlbumValues
             public function build(): Duration
             {
                 return Duration::fromSeconds($this->seconds);
+            }
+        };
+    }
+
+    private function artist()
+    {
+        return new class()
+        {
+            /** @var string */
+            private $name;
+
+            public function __construct()
+            {
+                $this->name = "some name";
+            }
+
+            public function withName(string $name): self
+            {
+                $this->name = $name;
+                return $this;
+            }
+
+            public function build(): Artist
+            {
+                return Artist::fromName($this->name);
             }
         };
     }

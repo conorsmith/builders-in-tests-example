@@ -30,4 +30,16 @@ class TrackTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue($duration->equals($track->getDuration()));
     }
+
+    /**
+     * @test
+     */
+    public function it_can_be_queried_for_its_artist()
+    {
+        $track = $this->track()
+            ->withArtist($artist = $this->artist()->build())
+            ->build();
+
+        $this->assertTrue($artist->equals($track->getArtist()));
+    }
 }
